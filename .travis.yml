@@ -13,4 +13,4 @@ deploy:
   - "node-http-macos"
   skip_cleanup: true
   draft: true
-script: node index.js
+script: node ci.js
