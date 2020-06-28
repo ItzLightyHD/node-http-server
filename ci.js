@@ -25,3 +25,5 @@ if(!fs.existsSync(path.join(process.cwd(), 'public/index.html'))) {
 app.use(express.static(path.join(process.cwd(), 'public')));
 
 app.listen(port, () => console.log(`[Server thread/INFO] Static files from 'public' hosting started on port ${port}`));
+
+process.exit(0);
