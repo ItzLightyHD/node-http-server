@@ -3,7 +3,7 @@ node_js:
   - 14
 before_deploy:
   - npm install -g pkg
-  - pkg .
+  - pkg . -t node14-linux-x64,node14-macos-x64,node14-win-x64
 deploy:
   provider: releases
   api_key: $GIT_OAUTH
