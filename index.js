@@ -1,17 +1,17 @@
+const path = require('path');
+const config = require(path.join(process.cwd(), 'config.json'));
 const express = require('express');
 const app = express();
-const port = 80;
-const path = require('path');
 const fs = require('fs');
 
-if(!fs.existsSync(path.join(process.cwd(), 'public'))) {
-    console.warn("[Server thread/WARN] Directory 'public' doesn't exist, be sure to create it!");
+if(!fs.existsSync(path.join(process.cwd(), config.webdir))) {
+    console.warn("[Server thread/WARN] Directory "+ config.webdir + " doesn't exist, be sure to create it!");
 }
 
-if(!fs.existsSync(path.join(process.cwd(), 'public/index.html'))) {
-    console.warn("[Server thread/WARN] 'index.html' file not found, listing all files instead");
+if(!fs.existsSync(path.join(process.cwd(), `${config.webdir}/${config.index}`))) {
+    console.warn("[Server thread/WARN] " + config.index + " file not found, listing all files instead");
     app.get('/', function (req, res) {
-        fs.readdir(path.join(process.cwd(), 'public'), function (err, files) {
+        fs.readdir(path.join(process.cwd(), config.webdir), function (err, files) {
             if (err) {
                 console.error("[Server thread/ERROR] Cannot list 'public' directory files");
                 res.send("Cannot list 'public' directory files");
@@ -22,6 +22,6 @@ if(!fs.existsSync(path.join(process.cwd(), 'public/index.html'))) {
       });
 }
 
-app.use(express.static(path.join(process.cwd(), 'public')));
+app.use(express.static(path.join(process.cwd(), config.webdir)));
 
-app.listen(port, () => console.log(`[Server thread/INFO] Static files from 'public' hosting started on port ${port}`));
+app.listen(config.port, () => console.log(`[Server thread/INFO] Static files from '${config.webdir}' hosting started on port ${config.port}`));
